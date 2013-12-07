@@ -15,7 +15,6 @@ Partial Class DateRange2Report
         Dim ReportParameter3 As Telerik.Reporting.ReportParameter = New Telerik.Reporting.ReportParameter()
         Dim ReportParameter4 As Telerik.Reporting.ReportParameter = New Telerik.Reporting.ReportParameter()
         Dim ReportParameter5 As Telerik.Reporting.ReportParameter = New Telerik.Reporting.ReportParameter()
-        Dim ReportParameter6 As Telerik.Reporting.ReportParameter = New Telerik.Reporting.ReportParameter()
         Dim StyleRule1 As Telerik.Reporting.Drawing.StyleRule = New Telerik.Reporting.Drawing.StyleRule()
         Dim StyleRule2 As Telerik.Reporting.Drawing.StyleRule = New Telerik.Reporting.Drawing.StyleRule()
         Dim StyleRule3 As Telerik.Reporting.Drawing.StyleRule = New Telerik.Reporting.Drawing.StyleRule()
@@ -516,24 +515,22 @@ Partial Class DateRange2Report
         Me.PageSettings.Landscape = True
         Me.PageSettings.Margins = New Telerik.Reporting.Drawing.MarginsU(Telerik.Reporting.Drawing.Unit.Inch(0.30000001192092896R), Telerik.Reporting.Drawing.Unit.Inch(0.30000001192092896R), Telerik.Reporting.Drawing.Unit.Inch(0.30000001192092896R), Telerik.Reporting.Drawing.Unit.Inch(0.30000001192092896R))
         Me.PageSettings.PaperKind = System.Drawing.Printing.PaperKind.Letter
-        ReportParameter1.Name = "dSalesmanNBR"
-        ReportParameter2.MultiValue = True
-        ReportParameter2.Name = "dCustomerClass"
-        ReportParameter3.Name = "dStartDate"
+        ReportParameter1.MultiValue = True
+        ReportParameter1.Name = "dCustomerClass"
+        ReportParameter2.Name = "dStartDate"
+        ReportParameter2.Type = Telerik.Reporting.ReportParameterType.DateTime
+        ReportParameter3.Name = "dEndDate"
         ReportParameter3.Type = Telerik.Reporting.ReportParameterType.DateTime
-        ReportParameter4.Name = "dEndDate"
-        ReportParameter4.Type = Telerik.Reporting.ReportParameterType.DateTime
-        ReportParameter5.Name = "dCustomerNBR"
-        ReportParameter6.AllowBlank = False
-        ReportParameter6.Name = "dDetail"
-        ReportParameter6.Type = Telerik.Reporting.ReportParameterType.[Boolean]
-        ReportParameter6.Value = "False"
+        ReportParameter4.Name = "dCustomerNBR"
+        ReportParameter5.AllowBlank = False
+        ReportParameter5.Name = "dDetail"
+        ReportParameter5.Type = Telerik.Reporting.ReportParameterType.[Boolean]
+        ReportParameter5.Value = "False"
         Me.ReportParameters.Add(ReportParameter1)
         Me.ReportParameters.Add(ReportParameter2)
         Me.ReportParameters.Add(ReportParameter3)
         Me.ReportParameters.Add(ReportParameter4)
         Me.ReportParameters.Add(ReportParameter5)
-        Me.ReportParameters.Add(ReportParameter6)
         Me.Style.BackgroundColor = System.Drawing.Color.White
         StyleRule1.Selectors.AddRange(New Telerik.Reporting.Drawing.ISelector() {New Telerik.Reporting.Drawing.StyleSelector("Title")})
         StyleRule1.Style.Color = System.Drawing.Color.FromArgb(CType(CType(214, Byte), Integer), CType(CType(97, Byte), Integer), CType(CType(74, Byte), Integer))

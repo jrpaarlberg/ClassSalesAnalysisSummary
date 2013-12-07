@@ -199,7 +199,6 @@ Partial Class Report1
         Me.SubReport1.ConditionalFormatting.AddRange(New Telerik.Reporting.Drawing.FormattingRule() {FormattingRule1})
         Me.SubReport1.Location = New Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Inch(0.000039418537198798731R), Telerik.Reporting.Drawing.Unit.Inch(0.18368785083293915R))
         Me.SubReport1.Name = "SubReport1"
-        InstanceReportSource1.Parameters.Add(New Telerik.Reporting.Parameter("dSalesmanNBR", "=Parameters.SalesmanNBR.Value"))
         InstanceReportSource1.Parameters.Add(New Telerik.Reporting.Parameter("dCustomerNBR", "=Fields.cust_nbr"))
         InstanceReportSource1.Parameters.Add(New Telerik.Reporting.Parameter("dStartDate", "=Parameters.dStartDate.Value"))
         InstanceReportSource1.Parameters.Add(New Telerik.Reporting.Parameter("dEndDate", "=Parameters.dEndDate.Value"))
@@ -269,14 +268,16 @@ Partial Class Report1
         '
         Me.SqlDataSource2.ConnectionString = "ClassSalesAnalysis.My.MySettings.ConvTest"
         Me.SqlDataSource2.Name = "SqlDataSource2"
-        Me.SqlDataSource2.SelectCommand = "SELECT DISTINCT sales_rep_assoc_nbr" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "FROM            dwh_sales_detail"
+        Me.SqlDataSource2.SelectCommand = "SELECT DISTINCT sales_rep_assoc_nbr" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "FROM            dwh_sales_detail" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "Where sale" & _
+    "s_rep_assoc_nbr is not null" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "and sales_rep_assoc_nbr <> ' '" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "order by sales_rep_" & _
+    "assoc_nbr"
         '
         'SqlDataSource3
         '
         Me.SqlDataSource3.ConnectionString = "ClassSalesAnalysis.My.MySettings.ConvTest"
         Me.SqlDataSource3.Name = "SqlDataSource3"
-        Me.SqlDataSource3.SelectCommand = "SELECT DISTINCT cust_grp_nbr " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & Global.Microsoft.VisualBasic.ChrW(9) & "FROM dwh_sales_detail  " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "ORDER BY cust_grp_nbr AS" & _
-    "C"
+        Me.SqlDataSource3.SelectCommand = "SELECT DISTINCT cust_grp_nbr " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & Global.Microsoft.VisualBasic.ChrW(9) & "FROM dwh_sales_detail " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "where cust_grp_nbr is not" & _
+    " null  " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "ORDER BY cust_grp_nbr ASC"
         '
         'SqlDataSource1
         '
@@ -284,7 +285,7 @@ Partial Class Report1
                     ",1)), 0)")})
         Me.SqlDataSource1.ConnectionString = "ClassSalesAnalysis.My.MySettings.ConvTest"
         Me.SqlDataSource1.Name = "SqlDataSource1"
-        Me.SqlDataSource1.Parameters.AddRange(New Telerik.Reporting.SqlDataSourceParameter() {New Telerik.Reporting.SqlDataSourceParameter("@SalesmanNBR", System.Data.DbType.[String], "=Parameters.SalesmanNBR.Value")})
+        Me.SqlDataSource1.Parameters.AddRange(New Telerik.Reporting.SqlDataSourceParameter() {New Telerik.Reporting.SqlDataSourceParameter("@StartDate", System.Data.DbType.[String], "=Parameters.StartDate.Value"), New Telerik.Reporting.SqlDataSourceParameter("@EndDate", System.Data.DbType.[String], "=Parameters.EndDate.Value")})
         Me.SqlDataSource1.SelectCommand = resources.GetString("SqlDataSource1.SelectCommand")
         '
         'reportFooter
@@ -489,7 +490,7 @@ Partial Class Report1
         Me.TextBox16.Style.Font.Size = Telerik.Reporting.Drawing.Unit.Point(12.0R)
         Me.TextBox16.Style.TextAlign = Telerik.Reporting.Drawing.HorizontalAlign.Center
         Me.TextBox16.StyleName = "Data"
-        Me.TextBox16.Value = "=""Salesman: "" + Parameters.SalesmanNBR.Value"
+        Me.TextBox16.Value = "=""Salesman: "" + Parameters.SalesmanNBR"
         '
         'Shape1
         '
@@ -755,7 +756,6 @@ Partial Class Report1
         'Report1
         '
         Me.DataSource = Me.SqlDataSource1
-        Me.Filters.Add(New Telerik.Reporting.Filter("=Fields.sales_rep_assoc_nbr", Telerik.Reporting.FilterOperator.Equal, "=Parameters.SalesmanNBR.Value"))
         Me.Filters.Add(New Telerik.Reporting.Filter("=Fields.sales_dt", Telerik.Reporting.FilterOperator.LessOrEqual, "=Parameters.EndDate.Value"))
         Me.Filters.Add(New Telerik.Reporting.Filter("=Fields.sales_dt", Telerik.Reporting.FilterOperator.GreaterOrEqual, "=Parameters.StartDate.Value"))
         Me.Filters.Add(New Telerik.Reporting.Filter("=Fields.cust_grp_nbr", Telerik.Reporting.FilterOperator.[In], "=Parameters.CustomerClass.Value"))
@@ -770,6 +770,7 @@ Partial Class Report1
         Group3.GroupFooter = Me.labelsGroupFooterSection
         Group3.GroupHeader = Me.labelsGroupHeaderSection
         Group3.Name = "labelsGroup"
+        Group3.Visible = False
         Me.Groups.AddRange(New Telerik.Reporting.Group() {Group1, Group2, Group3})
         Me.Items.AddRange(New Telerik.Reporting.ReportItemBase() {Me.sales_rep_assoc_nbrGroupHeaderSection, Me.sales_rep_assoc_nbrGroupFooterSection, Me.cust_nbrGroupHeaderSection, Me.cust_nbrGroupFooterSection, Me.labelsGroupHeaderSection, Me.labelsGroupFooterSection, Me.reportFooter, Me.pageHeader, Me.pageFooter, Me.reportHeader, Me.detail})
         Me.Name = "Report1"
@@ -800,22 +801,21 @@ Partial Class Report1
         ReportParameter4.Type = Telerik.Reporting.ReportParameterType.DateTime
         ReportParameter4.Value = "=now()"
         ReportParameter4.Visible = True
-        ReportParameter5.AllowBlank = False
+        ReportParameter5.AllowNull = True
         ReportParameter5.AvailableValues.DataSource = Me.SqlDataSource2
         ReportParameter5.AvailableValues.DisplayMember = "= Fields.sales_rep_assoc_nbr"
         ReportParameter5.AvailableValues.ValueMember = "= Fields.sales_rep_assoc_nbr"
+        ReportParameter5.MultiValue = True
         ReportParameter5.Name = "SalesmanNBR"
         ReportParameter5.Text = "Salesman nbr"
         ReportParameter5.Value = ""
-        ReportParameter5.Visible = True
-        ReportParameter6.AllowBlank = False
         ReportParameter6.AvailableValues.DataSource = Me.SqlDataSource3
         ReportParameter6.AvailableValues.DisplayMember = "= Fields.cust_grp_nbr"
         ReportParameter6.AvailableValues.ValueMember = "= Fields.cust_grp_nbr"
         ReportParameter6.MultiValue = True
         ReportParameter6.Name = "CustomerClass"
         ReportParameter6.Text = "Customer Class"
-        ReportParameter6.Value = "A"
+        ReportParameter6.Value = ""
         ReportParameter6.Visible = True
         ReportParameter7.AllowBlank = False
         ReportParameter7.Name = "ShowDetail"
